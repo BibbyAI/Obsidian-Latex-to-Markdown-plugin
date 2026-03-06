@@ -1,0 +1,113 @@
+/* ═══════════════════════════════════════════════════
+   LaTeX to Markdown Plugin — Styles
+   ═══════════════════════════════════════════════════ */
+
+/* ── Preview Modal ──────────────────────────────── */
+
+.latex-to-md-preview-modal {
+	max-width: 900px;
+	width: 90vw;
+}
+
+.latex-to-md-preview-modal h2 {
+	margin-bottom: 1em;
+	font-weight: 700;
+	color: var(--text-normal);
+	border-bottom: 1px solid var(--background-modifier-border);
+	padding-bottom: 0.5em;
+}
+
+.latex-to-md-preview-container {
+	display: flex;
+	gap: 16px;
+	max-height: 60vh;
+	overflow: hidden;
+}
+
+.latex-to-md-preview-panel {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.latex-to-md-preview-panel h3 {
+	margin: 0 0 8px 0;
+	font-size: 0.85em;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--text-muted);
+}
+
+.latex-to-md-preview-code {
+	flex: 1;
+	overflow: auto;
+	padding: 12px;
+	border-radius: 8px;
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	font-size: 0.82em;
+	line-height: 1.5;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.latex-to-md-preview-code code {
+	font-family: var(--font-monospace);
+	color: var(--text-normal);
+}
+
+/* ── Buttons ────────────────────────────────────── */
+
+.latex-to-md-preview-buttons {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 16px;
+	padding-top: 12px;
+	border-top: 1px solid var(--background-modifier-border);
+}
+
+.latex-to-md-preview-buttons button {
+	padding: 8px 20px;
+	border-radius: 6px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.15s ease;
+}
+
+.latex-to-md-preview-buttons button.mod-cta {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border: none;
+}
+
+.latex-to-md-preview-buttons button.mod-cta:hover {
+	background: var(--interactive-accent-hover);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.latex-to-md-preview-buttons button:not(.mod-cta) {
+	background: var(--background-secondary);
+	color: var(--text-muted);
+	border: 1px solid var(--background-modifier-border);
+}
+
+.latex-to-md-preview-buttons button:not(.mod-cta):hover {
+	background: var(--background-modifier-hover);
+	color: var(--text-normal);
+}
+
+/* ── Responsive ─────────────────────────────────── */
+
+@media (max-width: 600px) {
+	.latex-to-md-preview-container {
+		flex-direction: column;
+		max-height: 50vh;
+	}
+
+	.latex-to-md-preview-panel {
+		max-height: 40vh;
+	}
+}

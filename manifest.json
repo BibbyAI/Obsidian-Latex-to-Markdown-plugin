@@ -1,0 +1,10 @@
+{
+    "id": "latex-to-markdown",
+    "name": "LaTeX to Markdown",
+    "version": "1.0.0",
+    "minAppVersion": "1.0.0",
+    "description": "Convert LaTeX documents and snippets into clean Obsidian-flavored Markdown.",
+    "author": "Bibby AI - Latex Editor",
+    "authorUrl": "https://github.com/BibbyAI",
+    "isDesktopOnly": false
+}
