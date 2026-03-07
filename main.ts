@@ -9,12 +9,12 @@ export default class LatexToMarkdownPlugin extends Plugin {
         await this.loadSettings();
 
         // ── Ribbon icon ─────────────────────────────────────────────────
-        this.addRibbonIcon('file-input', 'Convert LaTeX to markdown', () => {
+        this.addRibbonIcon('file-input', 'Convert latex to markdown', () => {
             const view = this.app.workspace.getActiveViewOfType(MarkdownView);
             if (view) {
                 this.convertActiveNote(view.editor);
             } else {
-                new Notice('Open a note first to convert LaTeX.');
+                new Notice('Open a note first to convert latex.');
             }
         });
 
@@ -81,13 +81,13 @@ export default class LatexToMarkdownPlugin extends Plugin {
             // Convert selected text
             const converted = convertLatexToMarkdown(selection, this.settings);
             editor.replaceSelection(converted);
-            new Notice('✅ Selection converted from LaTeX to Markdown.');
+            new Notice('✅ Selection converted from latex to markdown.');
         } else {
             // Convert entire note
             const content = editor.getValue();
             const converted = convertLatexToMarkdown(content, this.settings);
             editor.setValue(converted);
-            new Notice('✅ Entire note converted from LaTeX to Markdown.');
+            new Notice('✅ Entire note converted from latex to markdown.');
         }
     }
 
@@ -132,7 +132,7 @@ export default class LatexToMarkdownPlugin extends Plugin {
             processFile()
                 .catch(err => {
                     new Notice(`❌ Error importing file: ${err}`);
-                    console.error('LaTeX import error:', err);
+                    console.error('Latex import error:', err);
                 })
                 .finally(() => {
                     document.body.removeChild(input);
@@ -153,7 +153,7 @@ export default class LatexToMarkdownPlugin extends Plugin {
 
             const converted = convertLatexToMarkdown(clipboardText, this.settings);
             editor.replaceSelection(converted);
-            new Notice('✅ Pasted and converted LaTeX from clipboard.');
+            new Notice('✅ Pasted and converted latex from clipboard.');
         } catch (err) {
             new Notice('❌ Could not read clipboard. Check permissions.');
             console.error('Clipboard error:', err);
@@ -194,24 +194,24 @@ class ConversionPreviewModal extends Modal {
         const { contentEl } = this;
         contentEl.addClass('latex-to-md-preview-modal');
 
-        contentEl.createEl('h2', { text: 'LaTeX to markdown preview' });
+        contentEl.createEl('h2', { text: 'Latex to markdown preview' });
 
         // Side-by-side panels
         const container = contentEl.createDiv({ cls: 'latex-to-md-preview-container' });
 
         const leftPanel = container.createDiv({ cls: 'latex-to-md-preview-panel' });
-        leftPanel.createEl('h3', { text: 'LaTeX Source' });
+        leftPanel.createEl('h3', { text: 'Latex source' });
         const sourceEl = leftPanel.createEl('pre', { cls: 'latex-to-md-preview-code' });
         sourceEl.createEl('code', { text: this.source });
 
         const rightPanel = container.createDiv({ cls: 'latex-to-md-preview-panel' });
-        rightPanel.createEl('h3', { text: 'Markdown Output' });
+        rightPanel.createEl('h3', { text: 'Markdown output' });
         const outputEl = rightPanel.createEl('pre', { cls: 'latex-to-md-preview-code' });
         outputEl.createEl('code', { text: this.converted });
 
         // Buttons
         const buttonContainer = contentEl.createDiv({ cls: 'latex-to-md-preview-buttons' });
-        const acceptBtn = buttonContainer.createEl('button', { text: 'Apply Conversion', cls: 'mod-cta' });
+        const acceptBtn = buttonContainer.createEl('button', { text: 'Apply conversion', cls: 'mod-cta' });
         acceptBtn.addEventListener('click', () => {
             this.onAccept(this.converted);
             new Notice('✅ Conversion applied.');
@@ -244,7 +244,7 @@ class LatexToMarkdownSettingTab extends PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
 
-        new Setting(containerEl).setHeading().setName('LaTeX to markdown settings');
+        new Setting(containerEl).setHeading().setName('Latex to markdown settings');
 
         new Setting(containerEl)
             .setName('Heading offset')
@@ -281,7 +281,7 @@ class LatexToMarkdownSettingTab extends PluginSettingTab {
                 }));
 
         new Setting(containerEl)
-            .setName('Preserve LaTeX comments')
+            .setName('Preserve latex comments')
             .setDesc('Convert % comments to HTML comments instead of removing them.')
             .addToggle(toggle => toggle
                 .setValue(this.plugin.settings.preserveComments)
