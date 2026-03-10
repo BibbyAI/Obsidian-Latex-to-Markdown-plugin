@@ -9,19 +9,19 @@ export default class LatexToMarkdownPlugin extends Plugin {
         await this.loadSettings();
 
         // ── Ribbon icon ─────────────────────────────────────────────────
-        this.addRibbonIcon('file-input', 'Convert latex to markdown', () => {
+        this.addRibbonIcon('file-input', 'convert latex to markdown', () => {
             const view = this.app.workspace.getActiveViewOfType(MarkdownView);
             if (view) {
                 this.convertActiveNote(view.editor);
             } else {
-                new Notice('Open a note first to convert latex.');
+                new Notice('open a note first to convert latex.');
             }
         });
 
         // ── Command: Convert selection or entire note ────────────────────
         this.addCommand({
             id: 'convert',
-            name: 'Convert current note or selection',
+            name: 'convert current note or selection',
             editorCallback: (editor: Editor) => {
                 this.convertActiveNote(editor);
             },
@@ -30,7 +30,7 @@ export default class LatexToMarkdownPlugin extends Plugin {
         // ── Command: Import .tex file ────────────────────────────────────
         this.addCommand({
             id: 'import',
-            name: 'Import file',
+            name: 'import file',
             callback: () => {
                 this.importLatexFile();
             },
@@ -39,7 +39,7 @@ export default class LatexToMarkdownPlugin extends Plugin {
         // ── Command: Paste clipboard as Markdown ─────────────────────────
         this.addCommand({
             id: 'paste',
-            name: 'Paste as markdown',
+            name: 'paste as markdown',
             editorCallback: (editor: Editor) => {
                 this.pasteLatexAsMarkdown(editor).catch(console.error);
             },
@@ -48,7 +48,7 @@ export default class LatexToMarkdownPlugin extends Plugin {
         // ── Command: Preview conversion ──────────────────────────────────
         this.addCommand({
             id: 'preview',
-            name: 'Preview conversion',
+            name: 'preview conversion',
             editorCallback: (editor: Editor) => {
                 this.previewConversion(editor);
             },
@@ -81,13 +81,13 @@ export default class LatexToMarkdownPlugin extends Plugin {
             // Convert selected text
             const converted = convertLatexToMarkdown(selection, this.settings);
             editor.replaceSelection(converted);
-            new Notice('✅ Selection converted from latex to markdown.');
+            new Notice('✅ selection converted from latex to markdown.');
         } else {
             // Convert entire note
             const content = editor.getValue();
             const converted = convertLatexToMarkdown(content, this.settings);
             editor.setValue(converted);
-            new Notice('✅ Entire note converted from latex to markdown.');
+            new Notice('✅ entire note converted from latex to markdown.');
         }
     }
 
@@ -126,13 +126,13 @@ export default class LatexToMarkdownPlugin extends Plugin {
                     await leaf.openFile(newFile);
                 }
 
-                new Notice(`✅ Imported "${file.name}" as "${fileName}".`);
+                new Notice(`✅ imported "${file.name}" as "${fileName}".`);
             };
 
             processFile()
                 .catch(err => {
-                    new Notice(`❌ Error importing file: ${err}`);
-                    console.error('Latex import error:', err);
+                    new Notice(`❌ error importing file: ${err}`);
+                    console.error('latex import error:', err);
                 })
                 .finally(() => {
                     document.body.removeChild(input);
@@ -147,16 +147,16 @@ export default class LatexToMarkdownPlugin extends Plugin {
             const clipboardText = await navigator.clipboard.readText();
 
             if (!clipboardText || clipboardText.trim().length === 0) {
-                new Notice('📋 Clipboard is empty.');
+                new Notice('📋 clipboard is empty.');
                 return;
             }
 
             const converted = convertLatexToMarkdown(clipboardText, this.settings);
             editor.replaceSelection(converted);
-            new Notice('✅ Pasted and converted latex from clipboard.');
+            new Notice('✅ pasted and converted latex from clipboard.');
         } catch (err) {
-            new Notice('❌ Could not read clipboard. Check permissions.');
-            console.error('Clipboard error:', err);
+            new Notice('❌ could not read clipboard. check permissions.');
+            console.error('clipboard error:', err);
         }
     }
 
@@ -194,30 +194,30 @@ class ConversionPreviewModal extends Modal {
         const { contentEl } = this;
         contentEl.addClass('latex-to-md-preview-modal');
 
-        contentEl.createEl('h2', { text: 'Latex to markdown preview' });
+        contentEl.createEl('h2', { text: 'latex to markdown preview' });
 
         // Side-by-side panels
         const container = contentEl.createDiv({ cls: 'latex-to-md-preview-container' });
 
         const leftPanel = container.createDiv({ cls: 'latex-to-md-preview-panel' });
-        leftPanel.createEl('h3', { text: 'Latex source' });
+        leftPanel.createEl('h3', { text: 'latex source' });
         const sourceEl = leftPanel.createEl('pre', { cls: 'latex-to-md-preview-code' });
         sourceEl.createEl('code', { text: this.source });
 
         const rightPanel = container.createDiv({ cls: 'latex-to-md-preview-panel' });
-        rightPanel.createEl('h3', { text: 'Markdown output' });
+        rightPanel.createEl('h3', { text: 'markdown output' });
         const outputEl = rightPanel.createEl('pre', { cls: 'latex-to-md-preview-code' });
         outputEl.createEl('code', { text: this.converted });
 
         // Buttons
         const buttonContainer = contentEl.createDiv({ cls: 'latex-to-md-preview-buttons' });
-        const acceptBtn = buttonContainer.createEl('button', { text: 'Apply conversion', cls: 'mod-cta' });
+        const acceptBtn = buttonContainer.createEl('button', { text: 'apply conversion', cls: 'mod-cta' });
         acceptBtn.addEventListener('click', () => {
             this.onAccept(this.converted);
-            new Notice('✅ Conversion applied.');
+            new Notice('✅ conversion applied.');
             this.close();
         });
-        const cancelBtn = buttonContainer.createEl('button', { text: 'Cancel' });
+        const cancelBtn = buttonContainer.createEl('button', { text: 'cancel' });
         cancelBtn.addEventListener('click', () => {
             this.close();
         });
@@ -244,11 +244,11 @@ class LatexToMarkdownSettingTab extends PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
 
-        new Setting(containerEl).setHeading().setName('Latex to markdown settings');
+        new Setting(containerEl).setHeading().setName('latex to markdown settings');
 
         new Setting(containerEl)
-            .setName('Heading offset')
-            .setDesc('Add this value to heading levels (e.g. 1 makes \\section become ## instead of #).')
+            .setName('heading offset')
+            .setDesc('add this value to heading levels (e.g. 1 makes \\section become ## instead of #).')
             .addSlider(slider => slider
                 .setLimits(0, 4, 1)
                 .setValue(this.plugin.settings.headingOffset)
@@ -259,8 +259,8 @@ class LatexToMarkdownSettingTab extends PluginSettingTab {
                 }));
 
         new Setting(containerEl)
-            .setName('Math delimiter style')
-            .setDesc('Choose the delimiter style for math blocks in the output.')
+            .setName('math delimiter style')
+            .setDesc('choose the delimiter style for math blocks in the output.')
             .addDropdown(dropdown => dropdown
                 .addOption('dollar', '$$ (dollar signs)')
                 .addOption('brackets', '\\[ \\] (brackets)')
@@ -271,8 +271,8 @@ class LatexToMarkdownSettingTab extends PluginSettingTab {
                 }));
 
         new Setting(containerEl)
-            .setName('Use wikilinks for references')
-            .setDesc('Convert \\ref{} to [[#label]] (wikilink) instead of [label](#label).')
+            .setName('use wikilinks for references')
+            .setDesc('convert \\ref{} to [[#label]] (wikilink) instead of [label](#label).')
             .addToggle(toggle => toggle
                 .setValue(this.plugin.settings.useWikilinks)
                 .onChange(async (value) => {
@@ -281,8 +281,8 @@ class LatexToMarkdownSettingTab extends PluginSettingTab {
                 }));
 
         new Setting(containerEl)
-            .setName('Preserve latex comments')
-            .setDesc('Convert % comments to HTML comments instead of removing them.')
+            .setName('preserve latex comments')
+            .setDesc('convert % comments to html comments instead of removing them.')
             .addToggle(toggle => toggle
                 .setValue(this.plugin.settings.preserveComments)
                 .onChange(async (value) => {
@@ -291,8 +291,8 @@ class LatexToMarkdownSettingTab extends PluginSettingTab {
                 }));
 
         new Setting(containerEl)
-            .setName('Convert citations')
-            .setDesc('Convert \\cite{} to [key] notation. Disable if you prefer raw citation keys.')
+            .setName('convert citations')
+            .setDesc('convert \\cite{} to [key] notation. disable if you prefer raw citation keys.')
             .addToggle(toggle => toggle
                 .setValue(this.plugin.settings.convertCitations)
                 .onChange(async (value) => {
