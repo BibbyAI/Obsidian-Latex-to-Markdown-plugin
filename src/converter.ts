@@ -38,14 +38,9 @@ export function convertLatexToMarkdown(latex: string, settings: PluginSettings):
         result = convertComments(result);
     }
 
-    // ── Phase 6: Clean up miscellaneous LaTeX commands ──────────────────
     result = cleanupMisc(result);
-
-    // ── Phase 7: Restore protected blocks ───────────────────────────────
     result = restoreCodeBlocks(result, codeBlocks);
     result = restoreMathBlocks(result, mathBlocks, settings.mathDelimiterStyle);
-
-    // ── Phase 8: Final normalization ────────────────────────────────────
     result = normalizeWhitespace(result);
 
     return result.trim();
